@@ -1,0 +1,70 @@
+backend:
+  name: git-gateway
+  branch: main
+# The place where Netlify CMS will save the image
+media_folder: "public/images"
+# The place where Next.js will reference the image once the site is built
+public_folder: "/images"
+local_backend: true
+collections:
+  - name: "uniques"
+    label: "Unique Pages"
+    files:
+      - label: "Home Page"
+        name: "home"
+        file: "content/home.md"
+        fields:
+          - { label: "Page Title", name: "title", widget: "string" }
+          - { label: "Main Headline", name: "mainHeadline", widget: "string" }
+          - { label: "Body", name: "body", widget: "markdown", required: false }
+      - label: "About"
+        name: "about"
+        file: "content/about.md"
+        fields:
+          - { label: "Page Title", name: "title", widget: "string" }
+          - { label: "Main Headline", name: "mainHeadline", widget: "string" }
+          - { label: "Body", name: "body", widget: "markdown", required: false }
+      - label: "Contact"
+        name: "contact"
+        file: "content/contact.md"
+        fields:
+          - { label: "Page Title", name: "title", widget: "string" }
+          - { label: "Main Headline", name: "mainHeadline", widget: "string" }
+          - { label: "Body", name: "body", widget: "markdown", required: false }
+      - label: "Contact Success"
+        name: "success"
+        file: "content/success.md"
+        fields:
+          - { label: "Page Title", name: "title", widget: "string" }
+          - { label: "Main Headline", name: "mainHeadline", widget: "string" }
+          - { label: "Body", name: "body", widget: "markdown", required: false }
+  - name: "page"
+    label: "Page"
+    folder: "content/pages"
+    create: true
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Body", name: "body", widget: "markdown", required: false }
+  - name: "podcasts" # Used in routes, e.g., /admin/collections/blog
+    label: "Podcasts" # Used in the UI
+    folder: "content/podcasts" # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}" # Filename template, e.g., YYYY-MM-DD-title.md
+    fields: # The fields for each document, usually in front matter
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Publish Date", name: "date", widget: "datetime"}
+      - {label: "Description", name: "description", widget: "string"}
+      - {label: "Season Number", name: "seasonNumber", widget: "number", min: 1}
+      - {label: "Episode Length", name: "episodeLength", widget: "number"}
+      - {label: "Content", name: "content", widget: "markdown"}
+      - label: "Image"
+        name: "image"
+        widget: "image"
+      - label: "Audio"
+        name: "audio"
+        widget: "file"
+        required: false
+        media_library:
+          config:
+            # github's max file size is 100mb unless you turn on LFS
+            max_file_size: 10000000
