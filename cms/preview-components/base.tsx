@@ -6,7 +6,6 @@ import { Component } from 'react';
  * to all the preview components that extend it.
  */
 export default class BasePreview extends Component<PreviewTemplateComponentProps> {
-
   /**
    * Executes Netlify CMS' `widgetFor` to extract data from the CMS
    * inputs.
@@ -24,7 +23,7 @@ export default class BasePreview extends Component<PreviewTemplateComponentProps
     // but it actually contains an array.
     // Theory: It could have something to do with how the field type was originally
     // committed to the repo.
-    this.props.widgetsFor(widgetName).forEach(entry => {
+    this.props.widgetsFor(widgetName).forEach((entry) => {
       if (entry) {
         value = entry;
       }

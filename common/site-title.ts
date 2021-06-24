@@ -3,5 +3,5 @@
  */
 export function siteTitle(pageTitle?: string) {
   const siteName = 'My Podcast Website';
-  return pageTitle ? `${pageTitle} - ${siteName}` :  siteName;
+  return pageTitle ? `${pageTitle} - ${siteName}` : siteName;
 }

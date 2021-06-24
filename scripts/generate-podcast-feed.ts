@@ -30,10 +30,10 @@ const PODCAST_CHANNEL_CONFIG = {
   categories: [
     {
       name: 'Music',
-      subcategories: [ 'Music History' ]
-    }
+      subcategories: ['Music History'],
+    },
   ] as PodcastCategory[],
-}
+};
 
 export default (async () => {
   const postFiles = await fsPromises.readdir(
@@ -44,10 +44,7 @@ export default (async () => {
 
   await Promise.all(
     postFiles.map(async (file, i) => {
-      const fileAtPath = path.resolve(
-        __dirname,
-        '../content/podcasts/' + file,
-      );
+      const fileAtPath = path.resolve(__dirname, '../content/podcasts/' + file);
 
       const fileData = await fsPromises.readFile(fileAtPath, {
         encoding: 'utf-8',
@@ -58,10 +55,9 @@ export default (async () => {
       feedItems.push({
         title: frontmatter.title,
         id: i,
-        audio: `${PODCAST_CHANNEL_CONFIG.podcastWebsiteUrl}/${frontmatter.audio.replace(
-          '/public',
-          '',
-        )}`,
+        audio: `${
+          PODCAST_CHANNEL_CONFIG.podcastWebsiteUrl
+        }/${frontmatter.audio.replace('/public', '')}`,
         description: frontmatter.description,
         content: frontmatter.content,
         date: frontmatter.date,
@@ -76,7 +72,9 @@ export default (async () => {
     return `<item>
         <title>${item.title}</title>
         <category domain="">${PODCAST_CHANNEL_CONFIG.author}</category>
-        <author>${PODCAST_CHANNEL_CONFIG.email} (${PODCAST_CHANNEL_CONFIG.author})</author>
+        <author>${PODCAST_CHANNEL_CONFIG.email} (${
+      PODCAST_CHANNEL_CONFIG.author
+    })</author>
         <link>${item.audio}</link>
         <guid>${item.audio}</guid>
         <itunes:image>${item.image}</itunes:image>
@@ -97,28 +95,36 @@ export default (async () => {
     <channel>
       <title>${PODCAST_CHANNEL_CONFIG.podcastTitle}</title>
       <link>${PODCAST_CHANNEL_CONFIG.podcastWebsiteUrl}/feeds/podcast.rss</link>
-      <author>${PODCAST_CHANNEL_CONFIG.email} (${PODCAST_CHANNEL_CONFIG.author})</author>
+      <author>${PODCAST_CHANNEL_CONFIG.email} (${
+    PODCAST_CHANNEL_CONFIG.author
+  })</author>
       <itunes:owner>
         <itunes:name>${PODCAST_CHANNEL_CONFIG.author}</itunes:name>
         <itunes:email>${PODCAST_CHANNEL_CONFIG.email}</itunes:email>
       </itunes:owner>
       <description>${PODCAST_CHANNEL_CONFIG.description}</description>
-      <itunes:image href="${PODCAST_CHANNEL_CONFIG.podcastWebsiteUrl}/images/pod-channel-art-3000x3000.png" />
-      ${
-        PODCAST_CHANNEL_CONFIG.categories.map(cat => {
+      <itunes:image href="${
+        PODCAST_CHANNEL_CONFIG.podcastWebsiteUrl
+      }/images/pod-channel-art-3000x3000.png" />
+      ${PODCAST_CHANNEL_CONFIG.categories
+        .map((cat) => {
           return `
           <itunes:category text="${cat.name}">
-            ${cat.subcategories.map(subCat => {
-              return `<itunes:category text="${subCat}" />`;
-            }).join('')}
+            ${cat.subcategories
+              .map((subCat) => {
+                return `<itunes:category text="${subCat}" />`;
+              })
+              .join('')}
           </itunes:category>
           `;
-        }).join('')
-      }
+        })
+        .join('')}
       <itunes:type>${PODCAST_CHANNEL_CONFIG.podcastType}</itunes:type>
       <itunes:author>${PODCAST_CHANNEL_CONFIG.author}</itunes:author>
       <language>${PODCAST_CHANNEL_CONFIG.language}</language>
-      <copyright>Copyright ${new Date().getFullYear()} ${PODCAST_CHANNEL_CONFIG.author}.</copyright>
+      <copyright>Copyright ${new Date().getFullYear()} ${
+    PODCAST_CHANNEL_CONFIG.author
+  }.</copyright>
       ${feedItems.map((item, index) => xmlItem(item, index)).join('')}
     </channel>
   </rss>`;

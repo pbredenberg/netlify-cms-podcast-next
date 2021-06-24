@@ -1,5 +1,5 @@
 import CMS from 'netlify-cms-app';
-import '../styles/index.scss'
+import '../styles/index.scss';
 import HomePreview from './preview-components/home';
 
 CMS.init();

@@ -1,4 +1,4 @@
-import Head from 'next/head'
+import Head from 'next/head';
 import { siteTitle } from '../common/site-title';
 import { attributes, react as PageContent } from '../content/success.md';
 import BasePage from './base';

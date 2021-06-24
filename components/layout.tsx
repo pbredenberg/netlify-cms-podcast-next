@@ -1,17 +1,17 @@
-import Header from '../components/header'
-import Navbar from '../components/navbar'
-import Footer from '../components/footer'
+import Header from '../components/header';
+import Navbar from '../components/navbar';
+import Footer from '../components/footer';
 
 export default function Layout({ children }) {
-    return <div className={'layout'}>
+  return (
+    <div className={'layout'}>
+      <Header />
 
-        <Header />
+      <Navbar />
 
-        <Navbar />
+      {children}
 
-        {children}
-
-        <Footer />
-
+      <Footer />
     </div>
+  );
 }
