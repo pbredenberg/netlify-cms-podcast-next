@@ -19,6 +19,12 @@ export interface PodcastItem {
   seasonNumber: number;
 }
 
+const PODCAST_CONTENT_DIR = '../content/podcasts';
+
+const FEED_OUTPUT_DIRECTORY = '../out/feeds';
+
+const FEED_FILE_NAME = 'podcast.rss';
+
 const PODCAST_CHANNEL_CONFIG = {
   author: 'Your name here',
   email: 'youemail@domain.com',
@@ -37,14 +43,17 @@ const PODCAST_CHANNEL_CONFIG = {
 
 export default (async () => {
   const postFiles = await fsPromises.readdir(
-    path.resolve(__dirname, '../content/podcasts'),
+    path.resolve(__dirname, PODCAST_CONTENT_DIR),
   );
 
   const feedItems: PodcastItem[] = [];
 
   await Promise.all(
     postFiles.map(async (file, i) => {
-      const fileAtPath = path.resolve(__dirname, '../content/podcasts/' + file);
+      const fileAtPath = path.resolve(
+        __dirname,
+        `${PODCAST_CONTENT_DIR}/` + file,
+      );
 
       const fileData = await fsPromises.readFile(fileAtPath, {
         encoding: 'utf-8',
@@ -129,17 +138,12 @@ export default (async () => {
     </channel>
   </rss>`;
 
-  await fsPromises.mkdir(path.resolve(__dirname, '../dist/feeds'), {
+  await fsPromises.mkdir(path.resolve(__dirname, FEED_OUTPUT_DIRECTORY), {
     recursive: true,
   });
 
   await fsPromises.writeFile(
-    path.resolve(__dirname, '../dist/feeds/podcast.rss'),
-    xmlDocData,
-  );
-
-  await fsPromises.writeFile(
-    path.resolve(__dirname, '../dist/feeds/podcast-apple.rss'),
+    path.resolve(__dirname, `${FEED_OUTPUT_DIRECTORY}/${FEED_FILE_NAME}`),
     xmlDocData,
   );
 })();
